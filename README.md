@@ -8,6 +8,8 @@
 ## 環境・ライブラリ
 ・Pytorch  
 ・matplotlib
+・scikit-learn
+・streamlit
 
 ## モデル内容
 ・pokemon_dataset：画像セット(img, img_All, img_similar, split_dataset, split_dataset(img_All), split_dataset(similar))  
@@ -15,6 +17,9 @@
 ・image_gathering.py：任意のポケモンの画像を複数ワードでGoogle検索し、重複の無いよう画像を収集してキャラクターごとのデータセットを作成  
 ・pokemon_zukan.py：VGG16の転移学習を用いた機械学習分類モデル(モデル核部分)  
 ・utils.py：機械学習に必要な共通関数を定義  
+
+##　実行
+streamlit run app.py
 
 ## 参考資料
 以下の方々・書籍等を参考に作成しました。  
