@@ -5,9 +5,7 @@ import torch
 import torchvision.models as models
 import torch.nn as nn
 from predict import predict_image
-
-# クラス名を定義（学習時と同じ順番で）
-classes = ['pikachu', '026_raichu', '172_pichu', '417_pachirisu', '587_emolga', '702_dedenne', '777_togedemaru', '778_mimikyu']
+from pokemon_zukan import classes
 
 # モデルの構築（学習時と同じ構造）
 net = models.vgg16_bn(pretrained=False)
