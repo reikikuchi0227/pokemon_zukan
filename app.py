@@ -15,7 +15,7 @@ net.load_state_dict(torch.load('model.pth', map_location='cpu'))
 net.eval()
 
 # Streamlit UI
-st.title("ポケモン画像分類アプリ")
+st.title("ポケモン図鑑")
 uploaded_file = st.file_uploader("画像を選択してください", type=['jpg', 'png'])
 
 if uploaded_file:
