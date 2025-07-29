@@ -11,6 +11,7 @@ import torch.optim as optim
 from torchinfo import summary
 # from torchviz import make_dot
 import torchvision.models as models
+from torchvision.models import mobilenet_v2
 from torchvision.datasets import ImageFolder
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
@@ -102,11 +103,12 @@ show_images_labels(val_loader, classes, None, None)
 show_images_labels(test_loader, classes, None, None)
 
 # 学習済みモデルの読み込み
-net = models.vgg16_bn(pretrained=True)
+# net = models.vgg16_bn(pretrained=True)
+net = mobilenet_v2(weights=None)
 
 # すべてのパラメータの学習を無効化⇒最後の全結合層だけ
-for param in net.parameters():
-    param.requires_grad = False
+# for param in net.parameters():
+#     param.requires_grad = False
     
 # 乱数固定
 torch_seed()
@@ -114,9 +116,15 @@ torch_seed()
 # クラス数を自動で取得
 num_classes = len(classes) # 更新中
 # VGG16の最後の全結合層の入力次元取得
-in_features = net.classifier[6].in_features
+# in_features = net.classifier[6].in_features
 # 学習される線形層
-net.classifier[6] = nn.Linear(in_features, num_classes)
+# net.classifier[6] = nn.Linear(in_features, num_classes)
+
+# 全結合層の出力を上書き（num_classesに合わせる）
+in_features = net.classifier[1].in_features
+net.classifier[1] = nn.Linear(in_features, num_classes)
+
+
 
 # AdaptiveAvgPool2dの取り外し
 # net.avgpool = nn.Identity()
@@ -132,7 +140,7 @@ criterion = nn.CrossEntropyLoss()
 
 # 最適化関数定義
 # パラメータ修正の対象を最終ノードに限定
-optimizer = optim.SGD(net.classifier[6].parameters(), lr=lr, momentum=0.9)
+optimizer = optim.SGD(net.classifier[1].parameters(), lr=lr, momentum=0.9)
 
 # historyファイルも初期化
 history = np.zeros((0, 5))
