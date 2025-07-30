@@ -9,7 +9,7 @@
 ・Pytorch  
 ・matplotlib
 ・scikit-learn
-・streamlit
+・streamlit(flask)
 
 ## モデル内容
 ・pokemon_dataset：画像セット(img, img_All, img_similar, split_dataset, split_dataset(img_All), split_dataset(similar))  
@@ -18,7 +18,7 @@
 ・pokemon_zukan.py：VGG16の転移学習を用いた機械学習分類モデル(モデル核部分)  
 ・utils.py：機械学習に必要な共通関数を定義  
 
-##　実行
+## 実行
 streamlit run app.py
 
 ## 参考資料
