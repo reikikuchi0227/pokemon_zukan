@@ -7,8 +7,8 @@
 
 ## 環境・ライブラリ
 ・Pytorch  
-・matplotlib
-・scikit-learn
+・matplotlib  
+・scikit-learn  
 ・streamlit(flask)
 
 ## モデル内容
