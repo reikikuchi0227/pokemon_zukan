@@ -12,6 +12,7 @@ from torchinfo import summary
 # from torchviz import make_dot
 import torchvision.models as models
 from torchvision.models import mobilenet_v2
+from torchvision.models import MobileNet_V2_Weights
 from torchvision.datasets import ImageFolder
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
@@ -104,11 +105,16 @@ show_images_labels(test_loader, classes, None, None)
 
 # 学習済みモデルの読み込み
 # net = models.vgg16_bn(pretrained=True)
-net = mobilenet_v2(weights=None)
+net = mobilenet_v2(weights=MobileNet_V2_Weights.IMAGENET1K_V1)
 
 # すべてのパラメータの学習を無効化⇒最後の全結合層だけ
 # for param in net.parameters():
 #     param.requires_grad = False
+
+# MobileNetV2の全層を学習可能に
+for param in net.parameters():
+    param.requires_grad = True
+
     
 # 乱数固定
 torch_seed()
@@ -140,14 +146,17 @@ criterion = nn.CrossEntropyLoss()
 
 # 最適化関数定義
 # パラメータ修正の対象を最終ノードに限定
-optimizer = optim.SGD(net.classifier[1].parameters(), lr=lr, momentum=0.9)
+# optimizer = optim.SGD(net.classifier[1].parameters(), lr=lr, momentum=0.9)
+
+optimizer = optim.Adam(net.parameters(), lr=lr)
+
 
 # historyファイルも初期化
 history = np.zeros((0, 5))
 
 
 # 学習の実行
-num_epochs = 10
+num_epochs = 30
 history = fit(net, optimizer, criterion, num_epochs, train_loader, val_loader, device, history)
 
 # テストデータで最終評価を行う
